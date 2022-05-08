@@ -1,9 +1,22 @@
 import { Display, Engine, Map, RNG, Scheduler } from "rot-js";
-import { bg_init } from "./background";
-import "./index.css";
+import "../assets/index.css";
 import Monster from "./monster";
 import { displayOptions } from "./options";
 import Player from "./player";
+import { bg_init } from "./three/background";
+import { init } from "./three/effect";
+const digger = new Map.Digger(
+  displayOptions.width - 2,
+  displayOptions.height - 2,
+  {
+    dugPercentage: 0.9,
+    roomWidth: [4, 12],
+    roomHeight: [3, 8],
+    // corridorLength: [number, number];
+    timeLimit: 1000,
+  }
+);
+
 const Game = {
   display: new Display(displayOptions),
   map: {},
@@ -15,28 +28,20 @@ const Game = {
     const canvas = document.querySelector("canvas");
 
     bg_init(canvas);
+    init(); // weaponeffect
     this._createMap();
-    var scheduler = new Scheduler.Simple();
+
+    let scheduler = new Scheduler.Simple();
     scheduler.add(this.player, true);
-    for (let i = 0; i < this.monsters.length; i++) {
+    for (let i = 0; i < this.monsters.length; i++)
       scheduler.add(this.monsters[i], true);
-    }
+
     this.engine = new Engine(scheduler);
     this.engine.start();
   },
   _createMap: function () {
     const freeCells = [];
-    const digger = new Map.Digger(
-      displayOptions.width - 2,
-      displayOptions.height - 2,
-      {
-        dugPercentage: 0.9,
-        roomWidth: [4, 12],
-        roomHeight: [3, 8],
-        // corridorLength: [number, number];
-        timeLimit: 1000,
-      }
-    );
+
     var callback = function (x, y, wall) {
       if (wall) {
         let a = x == 0,

@@ -1,6 +1,6 @@
 import { DIRS } from "rot-js";
 import { draw, getEngine, getMap } from "./index";
-var keyMap = { 38: 0, 33: 1, 39: 2, 34: 3, 40: 4, 35: 5, 37: 6, 36: 7 };
+var moveMap = { 38: 0, 33: 1, 39: 2, 34: 3, 40: 4, 35: 5, 37: 6, 36: 7 };
 
 const Player = function () {
   return {
@@ -17,9 +17,14 @@ const Player = function () {
       getEngine().lock();
       window.addEventListener("keydown", this);
     },
+    cast: function () {
+      console.log("cast");
+      getEngine().unlock();
+    },
     handleEvent: function (ev) {
-      if (!(ev.keyCode in keyMap)) return;
-      let diff = DIRS[8][keyMap[ev.keyCode]];
+      if (ev.keyCode === 32) return this.cast();
+      if (!(ev.keyCode in moveMap)) return;
+      let diff = DIRS[8][moveMap[ev.keyCode]];
       let x = this._x + diff[0];
       let y = this._y + diff[1];
       var newKey = x + "," + y;

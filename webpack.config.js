@@ -21,6 +21,10 @@ module.exports = {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.3mf$/,
+        use: ["file-loader"],
+      },
     ],
   },
 };
