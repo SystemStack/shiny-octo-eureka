@@ -1,8 +1,9 @@
 import { Display, Engine, Map, RNG, Scheduler } from "rot-js";
+import { bg_init } from "./background";
+import "./index.css";
 import Monster from "./monster";
 import { displayOptions } from "./options";
 import Player from "./player";
-
 const Game = {
   display: new Display(displayOptions),
   map: {},
@@ -11,6 +12,9 @@ const Game = {
   monsters: [],
   init: function () {
     document.body.appendChild(this.display.getContainer());
+    const canvas = document.querySelector("canvas");
+
+    bg_init(canvas);
     this._createMap();
     var scheduler = new Scheduler.Simple();
     scheduler.add(this.player, true);
@@ -95,6 +99,9 @@ Game.init();
 
 export function getDisplay() {
   return Game.display;
+}
+export function draw(x = 0, y = 0, chr = ".", fg = "#fff", bg = "#000") {
+  Game.display.draw(x, y, chr, fg, bg);
 }
 export function getEngine() {
   return Game.engine;

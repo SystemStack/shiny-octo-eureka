@@ -1,22 +1,10 @@
 import { Path } from "rot-js";
-import { getDisplay, getMap, getPlayer } from "./index";
+import { draw, getMap, getPlayer } from "./index";
+import { monster_prototype } from "./prototypes";
 
 const Monster = function () {
   return {
-    _x: 0,
-    _y: 0,
-    _draw: function (action) {
-      if (action) {
-        getDisplay().draw(this._x, this._y, action, "#ff0", "black");
-      } else {
-        getDisplay().draw(this._x, this._y, "👹", "#ff0", "black");
-      }
-    },
-    init: function (_x, _y) {
-      this._x = _x;
-      this._y = _y;
-      this._draw();
-    },
+    ...monster_prototype,
     act: function () {
       const player = getPlayer();
       let x = player._x;
@@ -35,16 +23,15 @@ const Monster = function () {
       astar.compute(this._x, this._y, pathCallback);
       path.shift();
       if (path.length < 2) {
-        this._draw("🤺");
+        this._model = this._attackingChar;
+        this._draw();
       } else {
+        this._model = this._char;
         if (path.length) {
           x = path[0][0];
           y = path[0][1];
-          getDisplay().draw(
-            this._x,
-            this._y,
-            getMap()[this._x + "," + this._y]
-          );
+
+          draw(this._x, this._y, getMap()[this._x + "," + this._y]);
           this._x = x;
           this._y = y;
         }
