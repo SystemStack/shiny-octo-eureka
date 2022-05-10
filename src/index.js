@@ -1,36 +1,42 @@
-import { Display, Engine, Map, RNG, Scheduler } from "rot-js";
+import { Display, Engine, Scheduler } from "rot-js";
 import "../assets/index.css";
-import Monster from "./monster";
-import { displayOptions } from "./options";
-import Player from "./player";
-import { bg_init } from "./three/background";
-import { init } from "./three/effect";
-const digger = new Map.Digger(
-  displayOptions.width - 2,
-  displayOptions.height - 2,
-  {
-    dugPercentage: 0.9,
-    roomWidth: [4, 12],
-    roomHeight: [3, 8],
-    // corridorLength: [number, number];
-    timeLimit: 1000,
-  }
-);
+import Monster from "./entities/monster";
+import Player from "./entities/player";
+import World from "./maps/world";
+import { init_background } from "./three/background";
+import { centerCanvas, displayOptions } from "./utils";
 
 const Game = {
   display: new Display(displayOptions),
   map: {},
-  engine: {},
-  player: {},
+  world: {},
   monsters: [],
   init: function () {
-    document.body.appendChild(this.display.getContainer());
-    const canvas = document.querySelector("canvas");
-
-    bg_init(canvas);
-    init(); // weaponeffect
-    this._createMap();
-
+    const container = this.display.getContainer();
+    container.style.opacity = 0.8;
+    container.style.zIndex = "100";
+    document.body.appendChild(container);
+    centerCanvas(container);
+    init_background(container);
+    this.world = World;
+    this.world.init();
+    this.player = this._createBeing(Player);
+    for (let i = 0; i < 3; i++) {
+      let mon = this._createBeing(Monster);
+      this.monsters.push(mon);
+    }
+    this._start();
+  },
+  _createBeing: function (factory) {
+    let key = this.world.getFreeCell();
+    var parts = key.split(",");
+    var x = parseInt(parts[0]);
+    var y = parseInt(parts[1]);
+    let being = factory();
+    being.init(x, y);
+    return being;
+  },
+  _start: function () {
     let scheduler = new Scheduler.Simple();
     scheduler.add(this.player, true);
     for (let i = 0; i < this.monsters.length; i++)
@@ -39,81 +45,34 @@ const Game = {
     this.engine = new Engine(scheduler);
     this.engine.start();
   },
-  _createMap: function () {
-    const freeCells = [];
-
-    var callback = function (x, y, wall) {
-      if (wall) {
-        let a = x == 0,
-          b = y == 0,
-          c = x == displayOptions.width - 3,
-          d = y == displayOptions.height - 3;
-        if (/*corner*/ (a && (b || d)) || (c && (b || d))) {
-          this.display.draw(x, y, "+");
-        } /*vertical*/ else if (a || c) {
-          this.display.draw(x, y, "|");
-        } /*horizontal*/ else if (b || d) {
-          this.display.draw(x, y, "⸻");
-        } /*interior*/ else {
-          this.display.draw(x, y, "#");
-        }
-        return;
-      }
-      const key = x + "," + y;
-      freeCells.push(key);
-      this.map[key] = ".";
-    };
-    digger.create(callback.bind(this));
-    this._generateBoxes(freeCells);
-
-    this._drawMap();
-    this.player = this._createBeing(Player, freeCells);
-    for (let i = 0; i < 3; i++) {
-      let mon = this._createBeing(Monster, freeCells);
-      this.monsters.push(mon);
-    }
-  },
-  _drawMap: function () {
-    for (var key in this.map) {
-      var parts = key.split(",");
-      var x = parseInt(parts[0]);
-      var y = parseInt(parts[1]);
-      this.display.draw(x, y, this.map[key]);
-    }
-  },
-  _generateBoxes: function (freeCells) {
-    for (var i = 0; i < 10; i++) {
-      var index = Math.floor(RNG.getUniform() * freeCells.length);
-      var key = freeCells.splice(index, 1)[0];
-      this.map[key] = "*";
-    }
-  },
-  _createBeing: function (factory, freeCells) {
-    var index = Math.floor(RNG.getUniform() * freeCells.length);
-    var key = freeCells.splice(index, 1)[0];
-    var parts = key.split(",");
-    var x = parseInt(parts[0]);
-    var y = parseInt(parts[1]);
-    let being = factory();
-    being.init(x, y);
-    return being;
-  },
 };
 
 Game.init();
 
-export function getDisplay() {
-  return Game.display;
-}
-export function draw(x = 0, y = 0, chr = ".", fg = "#fff", bg = "#000") {
+export function draw(x = 0, y = 0, chr = ".", fg, bg) {
   Game.display.draw(x, y, chr, fg, bg);
 }
-export function getEngine() {
-  return Game.engine;
+export function drawOver(x = 0, y = 0) {
+  Game.display.draw(
+    x,
+    y,
+    Game.world.currentDungeon.map[x + "," + y],
+    null,
+    null
+  );
 }
-export function getMap() {
-  return Game.map;
+export function unlockEngine() {
+  Game.engine.unlock();
 }
-export function getPlayer() {
-  return Game.player;
+export function lockEngine() {
+  Game.engine.lock();
+}
+export function getMapXY(x, y) {
+  return Game.world.currentDungeon.map[x + "," + y];
+}
+export function validPosition(x, y) {
+  return x + "," + y in Game.world.currentDungeon.map;
+}
+export function getPlayerPosition() {
+  return { x: Game.player._x, y: Game.player._y };
 }

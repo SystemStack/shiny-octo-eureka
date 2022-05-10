@@ -1,7 +1,6 @@
 import {
   AmbientLight,
   AnimationMixer,
-  Clock,
   PerspectiveCamera,
   PointLight,
   ReinhardToneMapping,
@@ -10,14 +9,13 @@ import {
   WebGLRenderer,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import Stats from "three/examples/jsm/libs/stats.module.js";
 import { ThreeMFLoader } from "three/examples/jsm/loaders/3MFLoader.js";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import octopath from "../../assets/octopus.3mf";
-let camera, stats;
-let composer, renderer, mixer, clock;
+
+let camera, stats, composer, renderer, mixer, clock;
 const params = {
   exposure: 1,
   bloomStrength: 1.5,
@@ -25,17 +23,10 @@ const params = {
   bloomRadius: 0,
 };
 
-// init();
-
-export function init() {
+export function init_weaponeffect() {
   let container = document.createElement("div");
   container.id = "container";
   document.body.appendChild(container);
-
-  stats = new Stats();
-  container.appendChild(stats.dom);
-
-  clock = new Clock();
 
   renderer = new WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -92,26 +83,26 @@ export function init() {
     animate();
   });
 
-  // const gui = new GUI();
+  const gui = new GUI();
 
-  // gui.add(params, "exposure", 0.1, 2).onChange(function (value) {
-  //   renderer.toneMappingExposure = Math.pow(value, 4.0);
-  // });
+  gui.add(params, "exposure", 0.1, 2).onChange(function (value) {
+    renderer.toneMappingExposure = Math.pow(value, 4.0);
+  });
 
-  // gui.add(params, "bloomThreshold", 0.0, 1.0).onChange(function (value) {
-  //   bloomPass.threshold = Number(value);
-  // });
+  gui.add(params, "bloomThreshold", 0.0, 1.0).onChange(function (value) {
+    bloomPass.threshold = Number(value);
+  });
 
-  // gui.add(params, "bloomStrength", 0.0, 3.0).onChange(function (value) {
-  //   bloomPass.strength = Number(value);
-  // });
+  gui.add(params, "bloomStrength", 0.0, 3.0).onChange(function (value) {
+    bloomPass.strength = Number(value);
+  });
 
-  // gui
-  //   .add(params, "bloomRadius", 0.0, 1.0)
-  //   .step(0.01)
-  //   .onChange(function (value) {
-  //     bloomPass.radius = Number(value);
-  //   });
+  gui
+    .add(params, "bloomRadius", 0.0, 1.0)
+    .step(0.01)
+    .onChange(function (value) {
+      bloomPass.radius = Number(value);
+    });
 
   window.addEventListener("resize", onWindowResize);
 }
