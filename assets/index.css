@@ -1,12 +1,42 @@
-/* canvas {
-  position: "absolute";
-  top: 50%;
-  left: 50%; 
-   transform: translate(-50%, -50%);
-} */
-body{
+body {
   background-color: black;
-  /* max-width: 100%;
-  max-height: 100%; */
   overflow: hidden;
 }
+.container {  
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-columns: 4fr .5fr;
+  grid-template-rows: 4fr .25fr 1fr;
+  gap: 5px 5px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "Game_Section Equipment_Section"
+    "Hero_Section Button_Group_Section"
+    "Log_Section Spell_Section";
+}
+.Game_Section {
+  grid-area: Game_Section;
+  background-color: black;
+}
+.Hero_Section {
+  grid-area: Hero_Section;
+  background-color: blue;
+}
+.Log_Section {
+  grid-area: Log_Section;
+  background-color: grey;
+}
+.Spell_Section {
+  grid-area: Spell_Section;
+  background-color: yellow;
+}
+.Button_Group_Section {
+  grid-area: Button_Group_Section;
+  background-color: green;
+}
+.Equipment_Section {
+  grid-area: Equipment_Section;
+  background-color: teal;
+}
+

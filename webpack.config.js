@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   devtool: "inline-source-map",
-  entry: ["./src/index.js"],
+  entry: "./src/index.js",
   mode: "development",
   output: {
     path: __dirname + "/dist",
@@ -12,8 +12,10 @@ module.exports = {
     port: 8080,
   },
   plugins: [
-    new HtmlWebpackPlugin(),
-    // {template: "./src/index.html",}
+    new HtmlWebpackPlugin({
+      title: "fun roguelike",
+      template: "./src/index.html",
+    }),
   ],
   module: {
     rules: [

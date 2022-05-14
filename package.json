@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "start": "npx webpack-dev-server",
-    "build": "npx webpack --mode=production"
+    "build": "npx webpack --mode=production",
+    "wombot": "node ./node_modules/wombot/cli.js \"Phosphorescent arachnid slaughtering her male prey\" 5 --noasync --quiet",
+    "postwombot": "mv ./generated/* ./assets/img/ && rmdir ./generated/"
   },
   "dependencies": {
     "rot-js": "^2.2.0",
@@ -22,6 +24,8 @@
     "style-loader": "^3.3.1",
     "webpack": "^5.72.0",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.9.0"
+    "webpack-dev-server": "^4.9.0",
+    "wombot": "adri326/wombot",
+    "yargs": "^17.5.0"
   }
 }

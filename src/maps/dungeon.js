@@ -1,18 +1,16 @@
 import { Map, RNG } from "rot-js";
 import { draw } from "../index";
-import { displayOptions } from "../utils";
-
-export const digger = new Map.Digger(
-  displayOptions.width - 2,
-  displayOptions.height - 2,
-  {
-    dugPercentage: 0.9,
+import { getDisplayOptions } from "../utils";
+let displayOptions = getDisplayOptions();
+function getDigger() {
+  return new Map.Digger(displayOptions.width - 2, displayOptions.height - 2, {
+    dugPercentage: 0.95,
     roomWidth: [4, 12],
-    roomHeight: [3, 8],
-    // corridorLength: [number, number];
-    timeLimit: 1000,
-  }
-);
+    roomHeight: [5, 18],
+    corridorLength: [3, 10],
+    timeLimit: 3750,
+  });
+}
 
 export const Dungeon = function (level = 1) {
   return {
@@ -50,6 +48,7 @@ export const Dungeon = function (level = 1) {
         this.freeCells.push(key);
         this.map[key] = ".";
       };
+      let digger = getDigger();
       digger.create(callback.bind(this));
       this._generateBoxes();
       this._generateStairs();
