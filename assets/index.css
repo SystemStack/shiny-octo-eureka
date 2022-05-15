@@ -2,12 +2,12 @@ body {
   background-color: black;
   overflow: hidden;
 }
-.container {  
+.container {
   display: grid;
   width: 100vw;
   height: 100vh;
-  grid-template-columns: 4fr .5fr;
-  grid-template-rows: 4fr .25fr 1fr;
+  grid-template-columns: 4fr 0.5fr;
+  grid-template-rows: 4fr 0.25fr 1fr;
   gap: 5px 5px;
   grid-auto-flow: row;
   grid-template-areas:
@@ -21,22 +21,109 @@ body {
 }
 .Hero_Section {
   grid-area: Hero_Section;
-  background-color: blue;
+  background-color: black;
 }
 .Log_Section {
   grid-area: Log_Section;
-  background-color: grey;
+  background-color: black;
 }
 .Spell_Section {
   grid-area: Spell_Section;
-  background-color: yellow;
+  background-color: black;
 }
 .Button_Group_Section {
   grid-area: Button_Group_Section;
-  background-color: green;
+  background-color: black;
 }
 .Equipment_Section {
   grid-area: Equipment_Section;
-  background-color: teal;
 }
 
+.Equipment_Section.equipment_container {
+  margin: 150px 0px 150px 0px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-auto-columns: 1fr;
+  gap: 5px 5px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "Shoulder_Container Helmet_Container Helmet_Container Ammo_Container"
+    "Shoulder_Container Helmet_Container Helmet_Container Amulet_Container"
+    "Shoulder_Container Helmet_Container Helmet_Container Amulet_Container"
+    "Glove_Container Torso_Container Torso_Container Bracer_Container"
+    "Glove_Container Torso_Container Torso_Container Bracer_Container"
+    "Glove_Container Torso_Container Torso_Container Bracer_Container"
+    "Right_Ring_Container Torso_Container Torso_Container Left_Ring_Container"
+    "Main_Hand_Container Leg_Container Leg_Container Off_Hand_Container"
+    "Main_Hand_Container Leg_Container Leg_Container Off_Hand_Container"
+    "Main_Hand_Container Leg_Container Leg_Container Off_Hand_Container"
+    "Main_Hand_Container Leg_Container Leg_Container Off_Hand_Container"
+    "Main_Hand_Container Boot_Container Boot_Container Off_Hand_Container"
+    "Main_Hand_Container Boot_Container Boot_Container Off_Hand_Container";
+}
+
+.Main_Hand_Container {
+  grid-area: Main_Hand_Container;
+  background-color: darkslategrey;
+}
+
+.Off_Hand_Container {
+  grid-area: Off_Hand_Container;
+  background-color: darkslategrey;
+}
+
+.Boot_Container {
+  grid-area: Boot_Container;
+  background-color: darkslategrey;
+}
+
+.Helmet_Container {
+  grid-area: Helmet_Container;
+  background-color: darkslategrey;
+}
+
+.Amulet_Container {
+  grid-area: Amulet_Container;
+  background-color: darkslategrey;
+}
+
+.Shoulder_Container {
+  grid-area: Shoulder_Container;
+  background-color: darkslategrey;
+}
+
+.Torso_Container {
+  grid-area: Torso_Container;
+  background-color: darkslategrey;
+}
+
+.Leg_Container {
+  grid-area: Leg_Container;
+  background-color: darkslategrey;
+}
+
+.Glove_Container {
+  grid-area: Glove_Container;
+  background-color: darkslategrey;
+}
+
+.Bracer_Container {
+  grid-area: Bracer_Container;
+  background-color: darkslategrey;
+}
+
+.Right_Ring_Container {
+  grid-area: Right_Ring_Container;
+  background-color: darkslategrey;
+}
+
+.Left_Ring_Container {
+  grid-area: Left_Ring_Container;
+  background-color: darkslategrey;
+}
+
+.Ammo_Container {
+  grid-area: Ammo_Container;
+  background-color: darkslategrey;
+}

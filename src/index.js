@@ -4,14 +4,24 @@ import Monster from "./entities/monster";
 import Player from "./entities/player";
 import World from "./maps/world";
 import { init_background } from "./three/background";
-import { getContainer, getGameDisplay } from "./utils";
+import {
+  getContainer,
+  getGameDisplay,
+  getHeroDisplay,
+  getLogDisplay,
+  initEquipmentContainer,
+} from "./utils";
 const Self = {
   monsters: Array(),
   init: function () {
     var container = getContainer();
     document.body.appendChild(container);
-    Self.display = getGameDisplay();
-    init_background(Self.display.getContainer());
+    initEquipmentContainer();
+
+    Self.gameDisplay = getGameDisplay();
+    init_background(Self.gameDisplay.getContainer());
+    Self.logDisplay = getLogDisplay();
+    self.heroDisplay = getHeroDisplay();
     Self.world = World;
     Self.world.init();
     Self.player = Self._createBeing(Player);
@@ -44,10 +54,10 @@ const Self = {
 Self.init();
 
 export function draw(x = 0, y = 0, chr = ".", fg, bg) {
-  Self.display.draw(x, y, chr, fg, bg);
+  Self.gameDisplay.draw(x, y, chr, fg, bg);
 }
 export function drawOver(x = 0, y = 0) {
-  Self.display.draw(
+  Self.gameDisplay.draw(
     x,
     y,
     Self.world.currentDungeon.map[x + "," + y],

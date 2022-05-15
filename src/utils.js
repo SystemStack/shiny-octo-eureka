@@ -48,21 +48,84 @@ export function getContainer() {
   }
   return container;
 }
+
+export function initEquipmentContainer() {
+  const sections = [
+    "Main_Hand",
+    "Off_Hand",
+    "Boot",
+    "Helmet",
+    "Amulet",
+    "Shoulder",
+    "Torso",
+    "Leg",
+    "Glove",
+    "Bracer",
+    "Right_Ring",
+    "Left_Ring",
+    "Ammo",
+  ];
+  const container = document.getElementsByClassName("Equipment_Section")[0];
+  container.classList.add("equipment_container");
+  for (const section of sections) {
+    const sectionContainer = document.createElement("div");
+    sectionContainer.className = `${section}_Container`;
+    container.appendChild(sectionContainer);
+  }
+  return container;
+}
+
 export function getGameDisplay() {
-  const gameSection = document.body.getElementsByClassName("Game_Section")[0];
+  const section = document.body.getElementsByClassName("Game_Section")[0];
   displayOptions.height =
-    Math.floor(gameSection.clientHeight / displayOptions.fontSize) - 2;
+    Math.floor(section.clientHeight / displayOptions.fontSize) - 2;
   displayOptions.width =
-    Math.floor(gameSection.clientWidth / displayOptions.fontSize) - 2;
+    Math.floor(section.clientWidth / displayOptions.fontSize) - 2;
   const display = new Display(displayOptions);
 
-  const gameCanvas = display.getContainer();
-  gameCanvas.style.zIndex = 100;
-  gameCanvas.style.opacity = 0.8;
+  const canvas = display.getContainer();
+  canvas.style.zIndex = 100;
+  canvas.style.opacity = 0.8;
   // Because the map digger has an offset of 2 for walls and 2 for floors, we need to
   // offset the canvas by 2x to center it.
-  gameCanvas.style.paddingTop = 2 * displayOptions.fontSize + "px";
-  gameCanvas.style.paddingLeft = 2 * displayOptions.fontSize + "px";
-  gameSection.appendChild(gameCanvas);
+  canvas.style.paddingTop = 2 * displayOptions.fontSize + "px";
+  canvas.style.paddingLeft = 2 * displayOptions.fontSize + "px";
+  section.appendChild(canvas);
+  return display;
+}
+
+export function getLogDisplay() {
+  const section = document.body.getElementsByClassName("Log_Section")[0];
+  const [width, height] = [
+    Math.floor(section.clientWidth / displayOptions.fontSize),
+    Math.floor(section.clientHeight / displayOptions.fontSize),
+  ];
+  const display = new Display({
+    ...displayOptions,
+    width: width,
+    height: height,
+  });
+  const canvas = display.getContainer();
+  section.appendChild(canvas);
+  display.drawText(0, 0, "Welcome to the dungeon!", width); //loremipsum
+  display.drawText(0, 1.25, "You feel hungry.", width); //loremipsum
+  return display;
+}
+
+export function getHeroDisplay() {
+  const section = document.body.getElementsByClassName("Hero_Section")[0];
+  const [width, height] = [
+    Math.floor(section.clientWidth / displayOptions.fontSize),
+    Math.floor(section.clientHeight / displayOptions.fontSize),
+  ];
+  const display = new Display({
+    ...displayOptions,
+    width: width,
+    height: height,
+  });
+  const canvas = display.getContainer();
+  const text = "Trollantha, Valkyrie of the North"; //loremipsum
+  display.drawText(width - text.length, 1, text, width); //loremipsum
+  section.appendChild(canvas);
   return display;
 }
