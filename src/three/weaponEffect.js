@@ -13,7 +13,7 @@ import { ThreeMFLoader } from "three/examples/jsm/loaders/3MFLoader.js";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
-import octopath from "../../assets/octopus.3mf";
+import octopath from "../../assets/models/octopus.3mf";
 
 let camera, stats, composer, renderer, mixer, clock;
 const params = {

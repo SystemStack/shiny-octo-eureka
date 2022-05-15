@@ -1,16 +1,19 @@
+import { createRoot } from "react-dom/client";
 import { Engine, Scheduler } from "rot-js";
-import "../assets/index.css";
-import Monster from "./entities/monster";
-import Player from "./entities/player";
-import World from "./maps/world";
-import { init_background } from "./three/background";
 import {
   getContainer,
   getGameDisplay,
   getHeroDisplay,
   getLogDisplay,
   initEquipmentContainer,
-} from "./utils";
+} from "./containers";
+import GameContainer from "./containers/GameContainer";
+import Monster from "./entities/monster";
+import Player from "./entities/player";
+import "./index.css";
+import World from "./maps/world";
+import { init_background } from "./three/background";
+const root = createRoot(document.getElementById("root"));
 const Self = {
   monsters: Array(),
   init: function () {
@@ -24,12 +27,9 @@ const Self = {
     Self.heroDisplay = getHeroDisplay();
     Self.world = World;
     Self.world.init();
-    Self.player = Self._createBeing(Player);
-    for (let i = 0; i < 3; i++) {
-      let mon = Self._createBeing(Monster);
-      Self.monsters.push(mon);
-    }
     Self._start();
+
+    root.render(<GameContainer />);
   },
   _createBeing: function (factory) {
     let key = Self.world.getFreeCell();
@@ -41,6 +41,12 @@ const Self = {
     return being;
   },
   _start: function () {
+    // TODO: move to monsterspawner
+    Self.player = Self._createBeing(Player);
+    for (let i = 0; i < 3; i++) {
+      let mon = Self._createBeing(Monster);
+      Self.monsters.push(mon);
+    }
     let scheduler = new Scheduler.Simple();
     scheduler.add(Self.player, true);
     for (let i = 0; i < Self.monsters.length; i++)

@@ -1,6 +1,6 @@
 import { Map, RNG } from "rot-js";
+import { getDisplayOptions } from "../containers/";
 import { draw } from "../index";
-import { getDisplayOptions } from "../utils";
 let displayOptions = getDisplayOptions();
 function getDigger() {
   return new Map.Digger(displayOptions.width - 2, displayOptions.height - 2, {

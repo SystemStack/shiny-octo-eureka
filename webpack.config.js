@@ -27,6 +27,11 @@ module.exports = {
         test: /\.3mf$/,
         use: ["file-loader"],
       },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"],
+      },
     ],
   },
 };
