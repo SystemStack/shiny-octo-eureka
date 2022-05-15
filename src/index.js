@@ -21,7 +21,7 @@ const Self = {
     Self.gameDisplay = getGameDisplay();
     init_background(Self.gameDisplay.getContainer());
     Self.logDisplay = getLogDisplay();
-    self.heroDisplay = getHeroDisplay();
+    Self.heroDisplay = getHeroDisplay();
     Self.world = World;
     Self.world.init();
     Self.player = Self._createBeing(Player);
