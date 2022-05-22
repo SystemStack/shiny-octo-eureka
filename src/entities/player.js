@@ -1,6 +1,6 @@
 import { DIRS } from "rot-js";
+import { init_weaponeffect } from "../geometry/weaponEffect";
 import { drawOver, lockEngine, unlockEngine, validPosition } from "../index";
-import { init_weaponeffect } from "../three/weaponEffect";
 import { being_prototype } from "./prototypes";
 var moveMap = { 38: 0, 33: 1, 39: 2, 34: 3, 40: 4, 35: 5, 37: 6, 36: 7 };
 

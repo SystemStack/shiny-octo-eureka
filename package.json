@@ -13,14 +13,18 @@
   },
   "dependencies": {
     "@react-three/fiber": "^8.0.16",
+    "gl-noise": "^1.6.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "rot-js": "^2.2.0",
-    "three": "^0.140.2"
+    "three": "^0.140.2",
+    "three-custom-shader-material": "^3.3.6",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
     "@babel/preset-react": "^7.16.7",
+    "@react-three/drei": "^9.11.2",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "eslint": "^8.15.0",

@@ -2,48 +2,71 @@ body {
   background-color: black;
   overflow: hidden;
 }
-.container {
+.Container {
+  position: relative;
   display: grid;
   width: 100vw;
   height: 100vh;
-  grid-template-columns: 4fr 0.5fr;
-  grid-template-rows: 4fr 0.25fr 1fr;
+  grid-template-columns: 7fr 1fr;
+  grid-template-rows: 15fr 1fr 4fr;
   gap: 5px 5px;
   grid-auto-flow: row;
   grid-template-areas:
-    "Game_Section Equipment_Section"
-    "Hero_Section Button_Group_Section"
-    "Log_Section Spell_Section";
+    "Game_Container Equipment_Container"
+    "Hero_Container Button_Group_Container"
+    "Log_Container Spell_Container";
 }
-.Game_Section {
-  grid-area: Game_Section;
+.Background_Container {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-columns: 7fr 1fr;
+  grid-template-rows: 15fr 1fr 4fr;
+  gap: 5px 5px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "Game_Background_Container Equipment_Background_Container"
+    "Hero_Background_Container Button_Background_Group_Container"
+    "Log_Background_Container Spell_Background_Container";
+}
+.Game_Container {
+  grid-area: Game_Container;
+  background-color: red;
+  opacity: 0.1;
+}
+.Game_Background_Container {
+  grid-area: Game_Background_Container;
   background-color: black;
 }
-.Hero_Section {
-  grid-area: Hero_Section;
+.Hero_Container {
+  grid-area: Hero_Container;
   background-color: black;
 }
-.Log_Section {
-  grid-area: Log_Section;
+.Log_Container {
+  grid-area: Log_Container;
   background-color: black;
 }
-.Spell_Section {
-  grid-area: Spell_Section;
+.Spell_Container {
+  grid-area: Spell_Container;
   background-color: black;
 }
-.Button_Group_Section {
-  grid-area: Button_Group_Section;
-  background-color: black;
+.Button_Group_Container {
+  grid-area: Button_Group_Container;
+  background-color: orange;
 }
-.Equipment_Section {
-  grid-area: Equipment_Section;
+.Equipment_Container {
+  grid-area: Equipment_Container;
+  background-color: black;
 }
 
-.Equipment_Section.equipment_container {
-  margin: 150px 0px 150px 0px;
+.Equipment_Container.Worn_Container {
+  /* margin: 150px 0px 150px 0px; */
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr; /*4*/
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /*12*/
   grid-auto-columns: 1fr;
   gap: 5px 5px;
   grid-auto-flow: row;

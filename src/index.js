@@ -1,35 +1,21 @@
 import { createRoot } from "react-dom/client";
 import { Engine, Scheduler } from "rot-js";
-import {
-  getContainer,
-  getGameDisplay,
-  getHeroDisplay,
-  getLogDisplay,
-  initEquipmentContainer,
-} from "./containers";
-import GameContainer from "./containers/GameContainer";
+import Container from "./containers";
 import Monster from "./entities/monster";
 import Player from "./entities/player";
 import "./index.css";
-import World from "./maps/world";
-import { init_background } from "./three/background";
-const root = createRoot(document.getElementById("root"));
+import "./utils/state";
+import { HeroStore, LogStore } from "./utils/state";
+
 const Self = {
   monsters: Array(),
   init: function () {
-    var container = getContainer();
-    document.body.appendChild(container);
-    initEquipmentContainer();
+    createRoot(document.getElementById("root")).render(Container());
+    // Self.world = World;
+    // Self.world.init();
+    // Self._start();
 
-    Self.gameDisplay = getGameDisplay();
-    init_background(Self.gameDisplay.getContainer());
-    Self.logDisplay = getLogDisplay();
-    Self.heroDisplay = getHeroDisplay();
-    Self.world = World;
-    Self.world.init();
-    Self._start();
-
-    root.render(<GameContainer />);
+    // root.render(<GameContainer />);
   },
   _createBeing: function (factory) {
     let key = Self.world.getFreeCell();
@@ -85,4 +71,12 @@ export function validPosition(x, y) {
 }
 export function getPlayerPosition() {
   return { x: Self.player._x, y: Self.player._y };
+}
+export function drawLogText(text) {
+  if (text && text.length) {
+    LogStore.getState().append(text);
+  }
+}
+export function drawHeroText(heroState) {
+  HeroStore.getState().update(heroState);
 }
