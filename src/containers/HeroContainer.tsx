@@ -1,28 +1,31 @@
 import { useEffect, useRef } from "react";
 import { Display } from "rot-js";
-import { displayOptions } from "../utils/options";
+import { IContainerProps } from "../interfaces";
 import { HeroStore } from "../utils/state";
-export default function (props) {
+export default function (props: IContainerProps) {
   const opts = {
-    ...displayOptions,
-    fontSize: displayOptions.fontSize - 1,
-    width: Math.floor(props.leftWidth / (displayOptions.fontSize - 1)),
-    height: Math.floor(props.middleHeight / (displayOptions.fontSize - 1)),
+    ...props.displayOptions,
+    fontSize: props.displayOptions.fontSize - 1,
+    width: Math.floor(props.leftWidth / (props.displayOptions.fontSize - 1)),
+    height: Math.floor(props.middleHeight / (props.displayOptions.fontSize - 1)),
   };
+  console.log(opts)
   const display = new Display(opts);
   const displayRef = useRef(null);
-  let drawText;
+  let drawText: (a: string, b: string) => void;
   let dismounted = false;
   useEffect(() => {
-    displayRef.current.appendChild(display.getContainer());
-    drawText = _drawText(display);
+    if (!dismounted) {
+      displayRef.current.appendChild(display.getContainer());
+      drawText = _drawText(display);
+    }
     return () => {
       dismounted = true;
       console.warn("hero container dismounted unexpectedly");
     };
   }, [display]);
-  const _drawText = (display, prevl1 = "", prevl2 = "") => {
-    return (l1, l2) => {
+  const _drawText = (display: any, prevl1 = "", prevl2 = "") => {
+    return (l1: typeof prevl1, l2: typeof prevl2) => {
       if (l1 === prevl1 && l2 === prevl2) return;
       display.clear();
       prevl1 = l1;

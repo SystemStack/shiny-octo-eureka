@@ -1,5 +1,4 @@
-import { Dungeon } from "./dungeon";
-
+import { Dungeon } from "./DungeonMap";
 const Self = {
   dungeonLevels: new Array(),
   currentDungeonLevel: 0,
@@ -16,7 +15,7 @@ const Self = {
     Self.dungeonLevels.push(dungeon);
     Self.currentDungeonLevel += 1;
   },
-  _createLevel: function () {},
+  _createLevel: function () { },
   getFreeCell() {
     return Self.currentDungeon.getFreeCell();
   },

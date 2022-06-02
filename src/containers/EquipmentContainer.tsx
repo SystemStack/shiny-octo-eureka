@@ -1,3 +1,5 @@
+import { IContainerProps } from "../interfaces";
+
 const slots = [
   "Main_Hand",
   "Off_Hand",
@@ -13,7 +15,7 @@ const slots = [
   "Left_Ring",
   "Ammo",
 ];
-export default function (props) {
+export default function (props: IContainerProps, playerEquipmentProps = {}) {
   return (
     <div className='Equipment_Container Worn_Container'>
       {slots.map((slot, index) => {

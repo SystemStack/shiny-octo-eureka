@@ -1,10 +1,14 @@
+const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   devtool: "inline-source-map",
-  entry: "./src/index.js",
+  entry: "./src/index.ts",
   mode: "development",
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
+  },
   output: {
-    path: __dirname + "/dist",
+    path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
   },
   devServer: {
@@ -17,6 +21,7 @@ module.exports = {
       template: "./src/index.html",
     }),
   ],
+
   module: {
     rules: [
       {
@@ -31,6 +36,11 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ["babel-loader"],
+      },
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
       },
     ],
   },

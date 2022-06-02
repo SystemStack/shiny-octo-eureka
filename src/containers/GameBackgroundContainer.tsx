@@ -1,11 +1,14 @@
 import { Cloud, Environment, Sky } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
+//@ts-ignore
 import { patchShaders } from "gl-noise/build/glNoise.m";
-import { useMemo, useRef } from "react";
-import { AdditiveBlending, Color, PointsMaterial } from "three";
-import CustomShaderMaterial from "three-custom-shader-material";
 
-function LostIt(props) {
+import { useMemo, useRef } from "react";
+import { AdditiveBlending, Color, PointsMaterial, Vector3 } from "three";
+import CustomShaderMaterial from "three-custom-shader-material";
+import { IContainerProps } from "../interfaces";
+
+function ShaderTest() {
   const materialRef = useRef(null);
   const positions = useMemo(
     () => new Float32Array(Array.from({ length: 1000 }, () => Math.random())),
@@ -46,26 +49,25 @@ function LostIt(props) {
   );
 }
 
-export default function (props) {
+export default function (props: IContainerProps) {
   const cameraProps = {
-    position: [0, 0, 1],
+    position: new Vector3(0, 0, 1),
     near: 0.1,
     far: 100,
     fov: 80,
     aspect: props.width / props.height,
   };
   const styles = {
-    paddingTop: 2 * props.fontSize + "px",
-    paddingLeft: 2 * props.fontSize + "px",
+    paddingTop: 2 * props.displayOptions.fontSize + "px",
+    paddingLeft: 2 * props.displayOptions.fontSize + "px",
   };
-
-  const num = Math.floor(Math.random() * (50000 - 1000 + 1) + 1000);
+  console.log(styles)
   return (
     <div className='Game_Background_Container' style={styles}>
-      <Canvas camera={{ position: [1, -1.25, 1] }}>
+      <Canvas camera={{ ...cameraProps }} >
         <Environment preset='apartment' />
         <Sky />
-        <LostIt />
+        <ShaderTest />
         <Clouds />
       </Canvas>
     </div>

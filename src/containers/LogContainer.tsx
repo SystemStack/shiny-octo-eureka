@@ -1,27 +1,29 @@
 import { useEffect, useRef } from "react";
 import { Display } from "rot-js";
-import { displayOptions } from "../utils/options";
+import { IContainerProps } from "../interfaces";
 import { LogStore } from "../utils/state";
-export default function (props) {
+export default function (props: IContainerProps) {
   const opts = {
-    ...displayOptions,
-    width: Math.floor(props.leftWidth / displayOptions.fontSize),
-    height: Math.floor(props.bottomHeight / displayOptions.fontSize),
+    ...props.displayOptions,
+    width: Math.floor(props.leftWidth / props.displayOptions.fontSize),
+    height: Math.floor(props.bottomHeight / props.displayOptions.fontSize),
   };
   const display = new Display(opts);
   const displayRef = useRef(null);
-  let drawText;
+  let drawText: (msg: string) => void;
   let dismounted = false;
   useEffect(() => {
-    displayRef.current.appendChild(display.getContainer());
-    drawText = _drawText(display);
+    if (!dismounted) {
+      displayRef.current.appendChild(display.getContainer());
+      drawText = _drawText(display);
+    }
     return () => {
       dismounted = true;
       console.warn("log container dismounted unexpectedly");
     };
   }, [display]);
-  const _drawText = (display, posY = 0) => {
-    return (text) => {
+  const _drawText = (display: Display, posY = 0) => {
+    return (text: string) => {
       display.drawText(0, posY, text);
       posY += 1.25;
     };
